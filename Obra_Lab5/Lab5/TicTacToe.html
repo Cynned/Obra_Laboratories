@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="index.css">
+    <title>TIC-TAC-TOE</title>
+</head>
+<body>
+    <h1> TIC TAC TOE <br>
+        That is Working, I think
+    </h1>
+
+
+    <div class="tictactoe">
+        <div id="status">Current player: X</div>
+        <table>
+            <tr>
+                <td><button class="my-button cell" data-index="0"></button></td>
+                <td><button class="my-button cell" data-index="1"></button></td>
+                <td><button class="my-button cell" data-index="2"></button></td>
+            </tr>
+            <tr>
+                <td><button class="my-button cell" data-index="3"></button></td>
+                <td><button class="my-button cell" data-index="4"></button></td>
+                <td><button class="my-button cell" data-index="5"></button></td>
+            </tr>
+            <tr>
+                <td><button class="my-button cell" data-index="6"></button></td>
+                <td><button class="my-button cell" data-index="7"></button></td>
+                <td><button class="my-button cell" data-index="8"></button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="reset">
+        <button type="button" class="reset-button" id="reset">RESET GAME</button>
+    </div>
+
+    <div id="result-modal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <button id="close-result" class="modal-close" aria-label="Close">×</button>
+            <div id="result-text"></div>
+        </div>
+    </div>
+
+    <script>
+        (function(){
+            const cells = document.querySelectorAll('.cell');
+            const statusEl = document.getElementById('status');
+            const resetBtn = document.getElementById('reset');
+
+            let board = Array(9).fill('');
+            let currentPlayer = 'X';
+            let running = true;
+
+            const winCombos = [
+                [0,1,2],[3,4,5],[6,7,8],
+                [0,3,6],[1,4,7],[2,5,8],
+                [0,4,8],[2,4,6]
+            ];
+
+            const modalEl = document.getElementById('result-modal');
+            const resultText = document.getElementById('result-text');
+            const closeResultBtn = document.getElementById('close-result');
+
+            function showResult(message){
+                resultText.textContent = message;
+                modalEl.classList.add('visible');
+                modalEl.setAttribute('aria-hidden','false');
+            }
+
+            closeResultBtn.addEventListener('click', ()=>{
+                modalEl.classList.remove('visible');
+                modalEl.setAttribute('aria-hidden','true');
+            });
+
+            function updateStatus(text){ statusEl.textContent = text; }
+
+            function checkWinner(){
+                for(const combo of winCombos){
+                    const [a,b,c] = combo;
+                    if(board[a] && board[a] === board[b] && board[a] === board[c]){
+                        running = false;
+                        showResult(`${board[a]} is the winner`);
+                        return;
+                    }
+                }
+                if(board.every(cell => cell)){
+                    running = false;
+                    showResult('Draw');
+                }
+            }
+
+            function handleCellClick(e){
+                const idx = Number(e.currentTarget.dataset.index);
+                if(!running || board[idx]) return;
+                board[idx] = currentPlayer;
+                e.currentTarget.textContent = currentPlayer;
+                checkWinner();
+                if(running){
+                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                    updateStatus(`Current player: ${currentPlayer}`);
+                }
+            }
+
+            function resetGame(){
+                board = Array(9).fill('');
+                currentPlayer = 'X';
+                running = true;
+                cells.forEach(c => c.textContent = '');
+                updateStatus(`Current player: ${currentPlayer}`);
+            }
+
+            cells.forEach(c => c.addEventListener('click', handleCellClick));
+            resetBtn.addEventListener('click', resetGame);
+            updateStatus(`Current player: ${currentPlayer}`);
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+.header{
+    display: flow-root;
+    color: rgb(255, 186, 186);
+    margin:auto;
+    font-size-adjust: inherit;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: cochin;
+}
+
+html{
+    background-color: #000000;
+}
+body{
+    background-image: url("back2.webp");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-size: cover;
+    background-color: rgb(238, 213, 221);
+}
+
+.container{
+    border-radius: 4rem;
+    border: 3px solid;
+    background-color: rgb(117, 13, 27);
+    border-color:rgb(255, 255, 255);
+    margin:auto;
+    padding-top: 10px;
+    padding: 20px;
+    padding-bottom: 25px;
+    width: 370px;
+    height: 500px;
+    color:aliceblue;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 21px;
+    font-family:Cochin;
+}
+
+.submit_btn{
+    padding-block: 10px;
+    padding-inline: 20px;
+    margin:auto;
+    position:relative;
+    text-align: center;
+    font-family: cochin;
+}
